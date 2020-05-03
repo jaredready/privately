@@ -1,15 +1,10 @@
 import { App, Stack, StackProps, RemovalPolicy } from "@aws-cdk/core";
-import { Table, AttributeType } from "@aws-cdk/aws-dynamodb";
+import { Table } from "@aws-cdk/aws-dynamodb";
 import { resolve } from "path";
 import { Role, ServicePrincipal, ManagedPolicy } from "@aws-cdk/aws-iam";
-import {
-  DynamoDbDataSource,
-  Resolver,
-  MappingTemplate,
-  GraphQLApi,
-  BaseDataSource,
-} from "@aws-cdk/aws-appsync";
+import { DynamoDbDataSource, Resolver, MappingTemplate, GraphQLApi, BaseDataSource } from "@aws-cdk/aws-appsync";
 import { Construct } from "@aws-cdk/core";
+import { ResolverConfigs } from "./resolvers";
 
 interface BackendStackProps extends StackProps {
   table: Table;
@@ -30,36 +25,18 @@ export class BackendStack extends Stack {
     });
 
     // TODO create custom restricted policy
-    tableAccessRole.addManagedPolicy(
-      ManagedPolicy.fromAwsManagedPolicyName("AmazonDynamoDBFullAccess")
-    );
+    tableAccessRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName("AmazonDynamoDBFullAccess"));
 
-    const ddbTableDataSource = new DynamoDbDataSource(
-      this,
-      "DdbTableDataSource",
-      {
-        table: props.table,
-        api: this.graphQlApi,
-        name: "dynamodb",
-        serviceRole: tableAccessRole,
-      }
-    );
+    const ddbTableDataSource = new DynamoDbDataSource(this, "DdbTableDataSource", {
+      table: props.table,
+      api: this.graphQlApi,
+      name: "dynamodb",
+      serviceRole: tableAccessRole,
+    });
 
-    const query_maskedEmailAddresses = createResolver(
-      this,
-      this.graphQlApi,
-      ddbTableDataSource,
-      "Query",
-      "maskedEmailAddresses"
-    );
-
-    const mutation_createMaskedEmailAddress = createResolver(
-      this,
-      this.graphQlApi,
-      ddbTableDataSource,
-      "Mutation",
-      "createMaskedEmailAddress"
-    );
+    ResolverConfigs.forEach((resolver) => {
+      createResolver(this, this.graphQlApi, ddbTableDataSource, resolver.type, resolver.field);
+    });
   }
 }
 
@@ -76,18 +53,10 @@ const createResolver = (
     fieldName,
     typeName,
     requestMappingTemplate: MappingTemplate.fromFile(
-      resolve(
-        __dirname,
-        "mappingTemplates/",
-        `${typeName}.${fieldName}.request.vtl`
-      )
+      resolve(__dirname, "mappingTemplates/", `${typeName}.${fieldName}.request.vtl`)
     ),
     responseMappingTemplate: MappingTemplate.fromFile(
-      resolve(
-        __dirname,
-        "mappingTemplates/",
-        `${typeName}.${fieldName}.response.vtl`
-      )
+      resolve(__dirname, "mappingTemplates/", `${typeName}.${fieldName}.response.vtl`)
     ),
   });
 };
