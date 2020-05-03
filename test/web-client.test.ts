@@ -1,6 +1,6 @@
 import { expect as expectCDK, haveResource } from "@aws-cdk/assert";
 import { App } from "@aws-cdk/core";
-import { WebClientStack } from "../lib/web-client-stack";
+import { WebClientStack } from "../lib/webClient";
 
 test("AppSync GraphQl API Created", () => {
   const app = new App();

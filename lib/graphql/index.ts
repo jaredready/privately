@@ -1,5 +1,4 @@
-import * as cdk from "@aws-cdk/core";
-import * as appsync from "@aws-cdk/aws-appsync";
+import { App, Stack, StackProps, RemovalPolicy } from "@aws-cdk/core";
 import { Table, AttributeType } from "@aws-cdk/aws-dynamodb";
 import { resolve } from "path";
 import { Role, ServicePrincipal, ManagedPolicy } from "@aws-cdk/aws-iam";
@@ -12,28 +11,18 @@ import {
 } from "@aws-cdk/aws-appsync";
 import { Construct } from "@aws-cdk/core";
 
-export class BackendStack extends cdk.Stack {
-  constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
+interface BackendStackProps extends StackProps {
+  table: Table;
+}
+
+export class BackendStack extends Stack {
+  graphQlApi: GraphQLApi;
+  constructor(scope: App, id: string, props: BackendStackProps) {
     super(scope, id, props);
 
-    const graphqlApi = new appsync.GraphQLApi(this, "GraphQlApi", {
+    this.graphQlApi = new GraphQLApi(this, "GraphQlApi", {
       name: "prod-privately",
       schemaDefinitionFile: resolve(__dirname, "schema.graphql"),
-    });
-
-    const ddbTable = new Table(this, "Table", {
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // TODO disable for production
-      tableName: "prod-app-table",
-      partitionKey: {
-        name: "partitionKey",
-        type: AttributeType.STRING,
-      },
-      sortKey: {
-        name: "sortKey",
-        type: AttributeType.STRING,
-      },
-      readCapacity: 5,
-      writeCapacity: 5,
     });
 
     const tableAccessRole = new Role(this, "TableAccessRole", {
@@ -49,8 +38,8 @@ export class BackendStack extends cdk.Stack {
       this,
       "DdbTableDataSource",
       {
-        table: ddbTable,
-        api: graphqlApi,
+        table: props.table,
+        api: this.graphQlApi,
         name: "dynamodb",
         serviceRole: tableAccessRole,
       }
@@ -58,7 +47,7 @@ export class BackendStack extends cdk.Stack {
 
     const query_maskedEmailAddresses = createResolver(
       this,
-      graphqlApi,
+      this.graphQlApi,
       ddbTableDataSource,
       "Query",
       "maskedEmailAddresses"
@@ -66,7 +55,7 @@ export class BackendStack extends cdk.Stack {
 
     const mutation_createMaskedEmailAddress = createResolver(
       this,
-      graphqlApi,
+      this.graphQlApi,
       ddbTableDataSource,
       "Mutation",
       "createMaskedEmailAddress"

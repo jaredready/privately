@@ -8,7 +8,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deployall": "cdk deploy '*' --profile privately"
   },
   "devDependencies": {
     "aws-cdk": "1.36.1",

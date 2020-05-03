@@ -1,27 +1,22 @@
 import { expect as expectCDK, haveResource } from "@aws-cdk/assert";
-import * as cdk from "@aws-cdk/core";
-import * as Backend from "../lib/backend-stack";
+import { App } from "@aws-cdk/core";
+import { BackendStack } from "../lib/graphql";
+import { DynamodbStack } from "../lib/dynamodb";
 
 test("AppSync GraphQl API Created", () => {
-  const app = new cdk.App();
+  const app = new App();
   // WHEN
-  const stack = new Backend.BackendStack(app, "MyTestStack");
+  const ddbStack = new DynamodbStack(app, "MyTestDdbStack");
+  const stack = new BackendStack(app, "MyTestStack", { table: ddbStack.table });
   // THEN
   expectCDK(stack).to(haveResource("AWS::AppSync::GraphQLApi"));
 });
 
-test("DynamoDb Table Created", () => {
-  const app = new cdk.App();
-  // WHEN
-  const stack = new Backend.BackendStack(app, "MyTestStack");
-  // THEN
-  expectCDK(stack).to(haveResource("AWS::DynamoDB::Table"));
-});
-
 test("AppSync DynamoDb Data Source Created", () => {
-  const app = new cdk.App();
+  const app = new App();
   // WHEN
-  const stack = new Backend.BackendStack(app, "MyTestStack");
+  const ddbStack = new DynamodbStack(app, "MyTestDdbStack");
+  const stack = new BackendStack(app, "MyTestStack", { table: ddbStack.table });
   // THEN
   expectCDK(stack).to(
     haveResource("AWS::AppSync::DataSource", {
@@ -31,9 +26,10 @@ test("AppSync DynamoDb Data Source Created", () => {
 });
 
 test("Query.maskedEmailAddresses Resolver Created", () => {
-  const app = new cdk.App();
+  const app = new App();
   // WHEN
-  const stack = new Backend.BackendStack(app, "MyTestStack");
+  const ddbStack = new DynamodbStack(app, "MyTestDdbStack");
+  const stack = new BackendStack(app, "MyTestStack", { table: ddbStack.table });
   // THEN
   expectCDK(stack).to(
     haveResource("AWS::AppSync::Resolver", {
@@ -44,9 +40,10 @@ test("Query.maskedEmailAddresses Resolver Created", () => {
 });
 
 test("Mutation.createMaskedEmailAddress Resolver Created", () => {
-  const app = new cdk.App();
+  const app = new App();
   // WHEN
-  const stack = new Backend.BackendStack(app, "MyTestStack");
+  const ddbStack = new DynamodbStack(app, "MyTestDdbStack");
+  const stack = new BackendStack(app, "MyTestStack", { table: ddbStack.table });
   // THEN
   expectCDK(stack).to(
     haveResource("AWS::AppSync::Resolver", {
