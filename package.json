@@ -22,8 +22,11 @@
   },
   "dependencies": {
     "@aws-cdk/aws-appsync": "^1.36.1",
+    "@aws-cdk/aws-cloudfront": "^1.36.1",
     "@aws-cdk/aws-dynamodb": "^1.36.1",
     "@aws-cdk/aws-iam": "^1.36.1",
+    "@aws-cdk/aws-s3": "^1.36.1",
+    "@aws-cdk/aws-s3-deployment": "^1.36.1",
     "@aws-cdk/aws-sns": "1.36.1",
     "@aws-cdk/aws-sns-subscriptions": "1.36.1",
     "@aws-cdk/aws-sqs": "1.36.1",

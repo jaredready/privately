@@ -10,9 +10,7 @@ import {
   GraphQLApi,
   BaseDataSource,
 } from "@aws-cdk/aws-appsync";
-import * as fs from "fs";
 import { Construct } from "@aws-cdk/core";
-import { create } from "domain";
 
 export class BackendStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
