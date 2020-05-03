@@ -1,0 +1,22 @@
+type Query {
+  maskedEmailAddresses: [MaskedEmailAddress]
+}
+
+type Mutation {
+  createMaskedEmailAddress: MaskedEmailAddress
+  toggleMaskedEmailAddress(
+    id: ID!
+    status: MaskedEmailStatus
+  ): MaskedEmailAddress
+  deleteMaskedEmailAddress(id: ID!): MaskedEmailAddress
+}
+
+type MaskedEmailAddress {
+  id: ID
+  address: String
+}
+
+enum MaskedEmailStatus {
+  ENABLED
+  DISABLED
+}
