@@ -1,0 +1,13 @@
+#set($id = $util.autoId())
+{
+  "version": "2017-02-28",
+  "operation": "PutItem",
+  "key": {
+    "pk": $util.dynamodb.toDynamoDBJson("USER#123"),
+    "sk": $util.dynamodb.toDynamoDBJson("MASK#$id@mask.com")
+  },
+  "attributeValues": {
+    "status": $util.dynamodb.toDynamoDBJson("DISABLED"),
+    "address": $util.dynamodb.toDynamoDBJson("$id@mask.com")
+  }
+}

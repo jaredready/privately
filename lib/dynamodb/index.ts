@@ -8,13 +8,12 @@ export class DynamodbStack extends Stack {
 
     this.table = new Table(this, "Table", {
       removalPolicy: RemovalPolicy.DESTROY, // TODO disable for production
-      tableName: "prod-app-table",
       partitionKey: {
-        name: "partitionKey",
+        name: "pk",
         type: AttributeType.STRING,
       },
       sortKey: {
-        name: "sortKey",
+        name: "sk",
         type: AttributeType.STRING,
       },
       readCapacity: 5,

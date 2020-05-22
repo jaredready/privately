@@ -1,0 +1,14 @@
+{
+  "version": "2017-02-28",
+  "operation": "UpdateItem",
+  "key": {
+    "pk": $util.dynamodb.toDynamoDBJson("USER#123"),
+    "sk": $util.dynamodb.toDynamoDBJson("MASK#$context.arguments.maskedAddress")
+  },
+  "update": {
+    "expression": "SET status = :status",
+    "expressionValues": {
+      ":status": $util.dynamodb.toDynamoDBJson($context.arguments.status)
+  	}
+  }
+}

@@ -6,12 +6,16 @@ interface ResolverConfig {
 const resolvers: Array<ResolverConfig> = [
   {
     type: "Query",
-    field: "maskedEmailAddresses",
+    field: "maskedAddresses",
   },
   {
     type: "Mutation",
-    field: "createMaskedEmailAddress",
+    field: "createMaskedAddress",
   },
+  {
+    type: "Mutation",
+    field: "changeMaskedAddressStatus",
+  }
 ];
 
 export { resolvers as ResolverConfigs };

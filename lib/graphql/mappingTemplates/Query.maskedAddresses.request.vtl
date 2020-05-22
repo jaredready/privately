@@ -1,0 +1,11 @@
+{
+  "version": "2017-02-28",
+  "operation": "Query",
+  "query": {
+    "expression": "pk = :user and begins_with(sk, :maskPrefix)",
+    "expressionValues": {
+        ":user": $util.dynamodb.toDynamoDBJson("USER#123"),
+        ":maskPrefix": $util.dynamodb.toDynamoDBJson("MASK#")
+    }
+  }
+}

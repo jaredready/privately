@@ -4,10 +4,11 @@ type Query {
 }
 
 type Mutation {
-  createdMaskedAddress: MaskedAddress
-  createdForwardingAddress(address: AWSEmail): ForwardingAddress
-  addForwardingAddress(maskedAddress: ID, forwardingAddress: ID): MaskedAddress
-  removeForwardingAddress(maskedAddress: ID, forwardingAddress: ID): MaskedAddress
+  createMaskedAddress: MaskedAddress
+  createForwardingAddress(address: AWSEmail): ForwardingAddress
+  addForwardingAddress(maskedAddress: AWSEmail, forwardingAddress: AWSEmail): MaskedAddress
+  removeForwardingAddress(maskedAddress: AWSEmail, forwardingAddress: AWSEmail): MaskedAddress
+  changeMaskedAddressStatus(maskedAddress: AWSEmail, status: MaskedAddressStatus): MaskedAddress
 }
 
 type MaskedAddress {
