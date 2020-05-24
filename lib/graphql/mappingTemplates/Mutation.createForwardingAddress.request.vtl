@@ -1,0 +1,9 @@
+{
+  "version" : "2017-02-28",
+  "operation" : "PutItem",
+  "key" : {
+    "pk": $util.dynamodb.toDynamoDBJson("USER#123"),
+    "sk": $util.dynamodb.toDynamoDBJson("FWD#$context.arguments.address")
+  },
+  "attributeValues": $util.dynamodb.toMapValuesJson($context.arguments)
+}
