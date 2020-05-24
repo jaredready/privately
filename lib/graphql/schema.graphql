@@ -6,7 +6,7 @@ type Query {
 type Mutation {
   createMaskedAddress: MaskedAddress
   createForwardingAddress(address: AWSEmail): ForwardingAddress
-  addForwardingAddress(maskedAddress: AWSEmail, forwardingAddress: AWSEmail): MaskedAddress
+  addForwardingAddress(maskedAddress: AWSEmail, forwardingAddress: AWSEmail): MaskedAddressAssociation
   removeForwardingAddress(maskedAddress: AWSEmail, forwardingAddress: AWSEmail): MaskedAddress
   changeMaskedAddressStatus(maskedAddress: AWSEmail, status: MaskedAddressStatus): MaskedAddress
 }
@@ -23,6 +23,13 @@ type ForwardingAddress {
   address: AWSEmail
   maskedAddresses: [MaskedAddress]
   status: ForwardingAddressStatus
+}
+
+type MaskedAddressAssociation {
+  _maskedAddress: AWSEmail
+  _forwardingAddress: AWSEmail
+  maskedAddress: MaskedAddress
+  forwardingAddress: ForwardingAddress
 }
 
 enum MaskedAddressStatus {

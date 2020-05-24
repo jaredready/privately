@@ -1,0 +1,12 @@
+{
+  "version" : "2017-02-28",
+  "operation" : "PutItem",
+  "key" : {
+    "pk": $util.dynamodb.toDynamoDBJson("MASK#$context.arguments.maskedAddress"),
+    "sk": $util.dynamodb.toDynamoDBJson("FWD#$context.arguments.forwardingAddress")
+  },
+  "attributeValues": $util.dynamodb.toMapValuesJson(
+    "_maskedAddress": $context.arguments.maskedAddress,
+    "_forwardingAddress": $context.arguments.forwardingAddress
+  )
+}

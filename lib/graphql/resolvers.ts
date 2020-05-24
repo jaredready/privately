@@ -20,10 +20,10 @@ const resolvers: Array<ResolverConfig> = [
     type: "Mutation",
     field: "createForwardingAddress",
   },
-  // {
-  //   type: "Mutation",
-  //   field: "addForwardingAddress",
-  // }
+  {
+    type: "Mutation",
+    field: "addForwardingAddress",
+  }
 ];
 
 export { resolvers as ResolverConfigs };
