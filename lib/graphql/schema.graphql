@@ -1,44 +1,12 @@
 type Query {
   maskedAddresses: [MaskedAddress]
-  forwardingAddresses: [ForwardingAddress]
 }
 
 type Mutation {
   createMaskedAddress: MaskedAddress
-  createForwardingAddress(address: AWSEmail): ForwardingAddress
-  addForwardingAddress(maskedAddress: AWSEmail, forwardingAddress: AWSEmail): MaskedAddressAssociation
-  removeForwardingAddress(maskedAddress: AWSEmail, forwardingAddress: AWSEmail): MaskedAddress
-  changeMaskedAddressStatus(maskedAddress: AWSEmail, status: MaskedAddressStatus): MaskedAddress
 }
 
 type MaskedAddress {
   id: ID
   address: AWSEmail
-  forwardingAddresses: [ForwardingAddress]
-  status: MaskedAddressStatus
-}
-
-type ForwardingAddress {
-  id: ID
-  address: AWSEmail
-  maskedAddresses: [MaskedAddress]
-  status: ForwardingAddressStatus
-}
-
-type MaskedAddressAssociation {
-  _maskedAddress: AWSEmail
-  _forwardingAddress: AWSEmail
-  maskedAddress: MaskedAddress
-  forwardingAddress: ForwardingAddress
-}
-
-enum MaskedAddressStatus {
-  ENABLED
-  DISABLED
-}
-
-enum ForwardingAddressStatus {
-  UNVERIFIED
-  ACTIVE
-  INACTIVE
 }

@@ -11,18 +11,6 @@ const resolvers: Array<ResolverConfig> = [
   {
     type: "Mutation",
     field: "createMaskedAddress",
-  },
-  {
-    type: "Mutation",
-    field: "changeMaskedAddressStatus",
-  },
-  {
-    type: "Mutation",
-    field: "createForwardingAddress",
-  },
-  {
-    type: "Mutation",
-    field: "addForwardingAddress",
   }
 ];
 
