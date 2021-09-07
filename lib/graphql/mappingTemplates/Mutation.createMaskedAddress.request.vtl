@@ -4,10 +4,10 @@
   "operation": "PutItem",
   "key": {
     "pk": $util.dynamodb.toDynamoDBJson("USER#123"),
-    "sk": $util.dynamodb.toDynamoDBJson("MASK#$id@mask.com")
+    "sk": $util.dynamodb.toDynamoDBJson("MASK#$id@relay.privately.sh")
   },
   "attributeValues": {
     "status": $util.dynamodb.toDynamoDBJson("DISABLED"),
-    "address": $util.dynamodb.toDynamoDBJson("$id@mask.com")
+    "address": $util.dynamodb.toDynamoDBJson("$id@relay.privately.sh")
   }
 }
