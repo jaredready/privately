@@ -7,7 +7,7 @@
     "sk": $util.dynamodb.toDynamoDBJson("MASK#$id@relay.privately.sh")
   },
   "attributeValues": {
-    "status": $util.dynamodb.toDynamoDBJson("DISABLED"),
-    "address": $util.dynamodb.toDynamoDBJson("$id@relay.privately.sh")
+    "address": $util.dynamodb.toDynamoDBJson("$id@relay.privately.sh"),
+    "id": $id
   }
 }
