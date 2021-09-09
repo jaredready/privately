@@ -4,8 +4,10 @@ import { BackendStack } from "../lib/graphql";
 import { WebClientStack } from "../lib/webClient";
 import { DistributionStack } from "../lib/cloudfront";
 import { DynamodbStack } from "../lib/dynamodb";
+import { CognitoStack } from "../lib/cognito";
 
 const app = new App();
+const cognitoStack = new CognitoStack(app, "CognitoStack");
 const ddbStack = new DynamodbStack(app, "DynamodbStack");
 const backendStack = new BackendStack(app, "BackendStack", {
   table: ddbStack.table,
