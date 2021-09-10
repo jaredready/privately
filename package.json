@@ -24,22 +24,20 @@
     "singleQuote": false
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.36.1",
-    "@aws-cdk/aws-appsync": "^1.36.1",
-    "@aws-cdk/aws-cloudfront": "^1.36.1",
-    "@aws-cdk/aws-dynamodb": "^1.36.1",
-    "@aws-cdk/aws-iam": "^1.36.1",
-    "@aws-cdk/aws-s3": "^1.36.1",
-    "@aws-cdk/core": "1.36.1",
-    "@types/jest": "^25.2.1",
+    "@aws-cdk/assert": "^1.122.0",
+    "@aws-cdk/aws-appsync": "^1.122.0",
+    "@aws-cdk/aws-cloudfront": "^1.122.0",
+    "@aws-cdk/aws-dynamodb": "^1.122.0",
+    "@aws-cdk/aws-iam": "^1.122.0",
+    "@aws-cdk/aws-s3": "^1.122.0",
+    "@aws-cdk/core": "^1.122.0",
+    "aws-cdk": "^1.122.0",
+    "@types/jest": "^27.0.1",
     "@types/node": "10.17.5",
-    "aws-cdk": "1.36.1",
-    "jest": "^25.5.0",
-    "ts-jest": "^25.3.1",
+    "jest": "^27.1.1",
+    "ts-jest": "^27.0.5",
     "ts-node": "^8.1.0",
-    "typescript": "~3.7.2"
-  },
-  "dependencies": {
+    "typescript": "^4.4.2",
     "eslint": "^7.0.0"
   }
 }
