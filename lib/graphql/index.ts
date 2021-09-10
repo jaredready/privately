@@ -2,7 +2,7 @@ import { App, Stack, StackProps } from "@aws-cdk/core";
 import { Table } from "@aws-cdk/aws-dynamodb";
 import { resolve } from "path";
 import { Role, ServicePrincipal, ManagedPolicy } from "@aws-cdk/aws-iam";
-import { DynamoDbDataSource, Resolver, MappingTemplate, GraphQLApi, BaseDataSource } from "@aws-cdk/aws-appsync";
+import { Resolver, MappingTemplate, GraphQLApi, BaseDataSource, AuthorizationType } from "@aws-cdk/aws-appsync";
 import { Construct } from "@aws-cdk/core";
 import { ResolverConfigs } from "./resolvers";
 import * as appsync from '@aws-cdk/aws-appsync';
@@ -20,7 +20,9 @@ export class BackendStack extends Stack {
       name: "prod-privately",
       schemaDefinitionFile: resolve(__dirname, "schema.graphql"),
       authorizationConfig: {
-        defaultAuthorization: {}
+        defaultAuthorization: {
+          authorizationType: AuthorizationType.API_KEY
+        }
       }
     });
 
@@ -28,15 +30,17 @@ export class BackendStack extends Stack {
       assumedBy: new ServicePrincipal("appsync.amazonaws.com"),
     });
 
+    this.graphQlApi.addDynamoDbDataSource("dynamodb", props.table)
+
     // TODO create custom restricted policy
     tableAccessRole.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName("AmazonDynamoDBFullAccess"));
 
-    const ddbTableDataSource = new DynamoDbDataSource(this, "DdbTableDataSource", {
-      table: props.table,
-      api: this.graphQlApi,
-      name: "dynamodb",
-      serviceRole: tableAccessRole,
-    });
+    // const ddbTableDataSource = new DynamoDbDataSource(this, "DdbTableDataSource", {
+    //   table: props.table,
+    //   api: this.graphQlApi,
+    //   name: "dynamodb",
+    //   serviceRole: tableAccessRole,
+    // });
 
     ResolverConfigs.forEach((resolver) => {
       createResolver(this, this.graphQlApi, ddbTableDataSource, resolver.type, resolver.field);
