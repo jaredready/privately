@@ -5,11 +5,11 @@ import {
   OriginProtocolPolicy,
 } from "@aws-cdk/aws-cloudfront";
 import { Bucket } from "@aws-cdk/aws-s3";
-import { GraphQLApi } from "@aws-cdk/aws-appsync";
+import { GraphqlApi } from "@aws-cdk/aws-appsync";
 
 interface DistributionStackProps extends StackProps {
   webClientBucket: Bucket;
-  graphQlApi: GraphQLApi;
+  graphQlApi: GraphqlApi;
 }
 
 export class DistributionStack extends Stack {
@@ -29,7 +29,7 @@ export class DistributionStack extends Stack {
             // TODO make this better somehow...
             domainName: Fn.select(
               2,
-              Fn.split("/", props.graphQlApi.graphQlUrl)
+              Fn.split("/", props.graphQlApi.graphqlUrl)
             ),
             originProtocolPolicy: OriginProtocolPolicy.HTTPS_ONLY,
           },
